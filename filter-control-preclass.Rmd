@@ -9,14 +9,46 @@ output: html_document
 ### Question 1:
 
 Using a loop, print the integers from 1 to 50. 
+```{r}
+for (a in c(1:50)){
+  print(a)
+}
+```
+
 
 ### Question 2:
 
 A.  Using a loop, add all the integers between 0 and 1000.
+```{r}
+j <-0
+
+for (i in 0:1000){
+  j <- j + i
+}
+
+j
+```
+
 
 B. Now, add all the EVEN integers between 0 and 1000 (hint: use seq())
+```{r}
+s <- seq(2,1000, 2)
+j <- 0
+for (i in s){
+  j <- j + i
+}
+j
+```
+
 
 C. Now, repeat A and B WITHOUT using a loop.
+```{r}
+x <- c(1:1000)
+sum(x)
+even <- seq(2,1000,by=2)
+sum(even)
+```
+
 
 ### Question 3:
 
@@ -36,4 +68,37 @@ The response to each question should be an integer between 1 and 5. Obviously, w
 
 A. Using a loop, create a new dataframe called survey.clean where all the invalid values (those that are not integers between 1 and 5) are set to NA.
 
+```{r}
+survey.clean <- survey
+
+for(i in 2:ncol(survey.clean)) {
+  
+ data <- survey.clean[,i]
+ 
+ data[(data %in% 1:5) == F] <- NA
+ 
+ survey.clean[,i] <- data
+ 
+}
+
+survey.clean
+```
+
+
 B. Now, again using a loop, add a new column to the dataframe called “invalid.answers” that indicates, for each participant, how many bad answers they gave.
+
+```{r}
+survey.clean$invalid.answers <- NA
+
+for(row.i in 1:nrow(survey.clean)) {
+  
+  data <- survey.clean[row.i,]
+  n.na <- sum(is.na(data)) - 1 # Have to subtact 1 for the last NA
+  
+  survey.clean$invalid.answers[row.i] <- n.na
+
+}
+
+survey.clean
+```
+
